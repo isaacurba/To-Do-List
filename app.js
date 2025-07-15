@@ -6,7 +6,7 @@ import ejs from "ejs";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public")); // Optional: for serving CSS, images, etc.
+app.use(express.static("public")); 
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -26,7 +26,7 @@ app.get("/", (req, res) => {
     };
     var day = today.toLocaleDateString("en-US", options);
         
-    res.render("list", { kindOfDay: day, newListItem: newItems });
+    res.render("list", { kindOfDay: day, newListItems: newItems });
     });
 
 app.post("/", (req, res) => {
