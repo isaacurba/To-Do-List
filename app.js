@@ -6,50 +6,38 @@ import ejs from "ejs";
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static("public")); // Optional: for serving CSS, images, etc.
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.set("view engine", "ejs"); 
 
-app.get("/", (req, res)=>{
-    let today = new Date();
-    let day = "";
-    let currentDay = today.getDay();
+    let newItems = [];
 
-    switch (currentDay) {
-    case 0:
-        day = "Sunday";
-        break;
-    case 1:
-        day = "Monday";
-        break;
-    case 2:
-        day = "Tuesday";
-        break;
-    case 3:
-        day = "Wednesday";
-        break;
-    case 4:
-        day = "Thursday";
-        break;
-    case 5:
-        day = "Friday";
-        break;
-    case 6:
-        day = "Saturday";
-        break;
-    default:
-        day = "Unknown Day";
-    }
+
+app.get("/", (req, res) => {
+    let today  = new Date();
+    let options = {
+        weekday: 'long', 
+        day: 'numeric',
+        year: 'numeric',
+        month: 'long',
+    };
+    var day = today.toLocaleDateString("en-US", options);
         
-    res.render("list", {kindOfDay: day});
+    res.render("list", { kindOfDay: day, newListItem: newItems });
+    });
+
+app.post("/", (req, res) => {
+    let newItem = req.body.newItem; 
+    newItems.push(newItem); 
+    res.redirect("/");
 });
 
-// app.get("/", (req, res) => {
-//   res.sendFile(path.join(__dirname, "index.html"));
-// });
 
-app.listen(3000, ()=>{
-    console.log("Server responding at port 3000!!")
+app.listen(3000, () => {
+    console.log("Server responding at port 3000!!");
 });
+
+
