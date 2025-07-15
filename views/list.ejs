@@ -1,40 +1,30 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>To‑Do List</title>
-  <link rel="stylesheet" href="/css/styles.css" />
-</head>
-<body>
-  <div class="todo-container">
-    <!-- Smaller, styled heading -->
-    <h1 class="day-heading"><%= kindOfDay %></h1>
+<%- include('header'); -%>
 
-    <!-- Input + submit button -->
-    <form action="/" method="POST" class="todo-form">
-      <input
-        type="text"
-        name="newItem"
-        placeholder="What’s next?"
-        autocomplete="off"
-        required
-      />
-      <button type="submit" class="add-btn">+</button>
-    </form>
+    <div class="todo-container">
+      <!-- Smaller, styled heading -->
+      <h1 class="day-heading"><%= listTitle %></h1>
 
-    <!-- Dynamic list with checkboxes -->
-    <ul class="todo-list">
-      <% for (let i = 0; i < newListItems.length; i++) { %>
-        <li>
-          <label class="checkbox-container">
-            <input type="checkbox" />
-            <span class="checkmark"></span>
-            <span class="item-text"><%= newListItems[i] %></span>
-          </label>
-        </li>
-      <% } %>
-    </ul>
-  </div>
-</body>
-</html>
+      <!-- Input + submit button -->
+          <form action="/" method="POST" class="todo-form">
+          <input type="text" name="newItem" placeholder="What’s next?" autocomplete="off" required />
+          <input type="hidden" name="list" value="<%= listTitle %>" />
+          <button type="submit" class="add-btn">+</button>
+          </form>
+
+      <!-- Dynamic list with checkboxes -->
+      <ul class="todo-list">
+        <% for (let i = 0; i < newListItems.length; i++) { %>
+          <li>
+            <label class="checkbox-container">
+              <input type="checkbox" />
+              <span class="checkmark"></span>
+              <span class="item-text"><%= newListItems[i] %></span>
+            </label>
+          </li>
+        <% } %>
+      </ul>
+    </div>
+
+<%- include('footer'); -%>    
+
+
